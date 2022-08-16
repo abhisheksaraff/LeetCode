@@ -18,20 +18,24 @@ public class ImplementStrStr {
     }
 
     public static int strStr(String haystack, String needle) {
-        StringBuilder hayStrBui = new StringBuilder(haystack);
-        int i = 0;
-        do{
-            if(!(needle.charAt(i) == haystack.charAt(i)))   {
-                hayStrBui.deleteCharAt(0);
-            }   else    {
-                i++;
-            }
-            System.out.println(hayStrBui + " " + i);
-        } while(hayStrBui.length() > needle.length() && i != needle.length());
-
-        if(hayStrBui.equals(needle)){
-            return hayStrBui.length();
-        }   else
+        if(needle.length()>haystack.length() || needle.length()==0 || haystack.length()==0 || !(haystack.contains(""+needle.charAt(0))))
             return -1;
+
+        for(int i = haystack.indexOf(needle.charAt(0)); i < haystack.length()-needle.length(); i++)  {
+            int needleCounter = 0;
+            for(int j = i; j < i+needle.length(); j++) {
+                if(j > haystack.length()-1)
+                    return -1;
+                if(haystack.charAt(i)==needle.charAt(i))  {
+                    needleCounter ++;
+                }
+            }
+            if(needleCounter == needle.length())
+                return i;
+            else
+                needleCounter = 0;
+        }
+
+        return -1;
     }
 }
