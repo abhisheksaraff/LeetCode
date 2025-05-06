@@ -1,29 +1,24 @@
 package com.company;
 
-public class TwoSum
-{
-    public static void main(String[] args)
-    {
-        int question[] = {1,3,7,9,23,6};
-        solution(question, 10);
-        System.out.println();
+import java.util.*;
+
+public class TwoSum {
+    public static void main(String[] args) {
+        int question[] = { 1, 3, 7, 9, 23, 6 };
+        int result[] = twoSum(question, 10);
+        System.out.println(result[0] + " " + result[1]);
     }
 
-    static int[] solution(int[] nums, int target) {
-        int[] solution = new int[2];
+    public static int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> complements = new HashMap<>();
 
-        for(int i = 0; i <= nums.length-1; i++)
-        {
-            for(int j = 1; j <= nums.length-1; j++)
-            {
-                if(nums[i]+nums[j] == target)
-                {
-                    solution [0] = i;
-                    solution [1] = j;
-                    return solution;
-                }
-            }
+        for (int i = 0; i < nums.length; i++) {
+            if (complements.get(target - nums[i]) != null)
+                return new int[] { complements.get(target - nums[i]), i };
+            else
+                complements.put(nums[i], i);
         }
-        return solution;
+
+        return new int[] {}; // no solution found
     }
 }
