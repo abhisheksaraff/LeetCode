@@ -65,20 +65,49 @@ public class AddTwoNumbers {
     }
 
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        return getIntToListNode(getValue(l1, 1) + getValue(l2, 1));
+        return addTwoNumbersHelper(l1, l2, 0);
     }
 
-    private static int getValue(ListNode l, int multiplier) {
-        if (l.next == null)
-            return l.val * multiplier;
-        else
-            return (l.val * multiplier) + getValue(l.next, multiplier * 10);
+    public static ListNode addTwoNumbersHelper(ListNode l1, ListNode l2, int carry) {
+
+        if (l1 == (null) && l2 == (null)) {
+            if (carry == 0)
+                return null;
+            else
+                return new ListNode(carry);
+        } else if (l1 == (null)) {
+            if ((l2.val + carry) < 10)
+                return new ListNode((l2.val + carry), addTwoNumbersHelper(l1, l2.next, 0));
+            else
+                return new ListNode((l2.val + carry - 10), addTwoNumbersHelper(l1, l2.next, 1));
+        } else if (l2 == (null)) {
+            if ((l1.val + carry) < 10)
+                return new ListNode((l1.val + carry), addTwoNumbersHelper(l1.next, l2, 0));
+            else
+                return new ListNode((l1.val + carry - 10), addTwoNumbersHelper(l1.next, l2, 1));
+        } else {
+            if ((l1.val + l2.val + carry) < 10)
+                return new ListNode((l1.val + l2.val + carry), addTwoNumbersHelper(l1.next, l2.next, 0));
+            else
+                return new ListNode((l1.val + l2.val + carry - 10), addTwoNumbersHelper(l1.next, l2.next, 1));
+        }
     }
 
-    private static ListNode getIntToListNode(int i) {
-        if (i / 10 == 0)
-            return new ListNode(i);
-        else
-            return new ListNode((i % 10), getIntToListNode(i / 10));
-    }
+    // public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    // return getIntToListNode(getValue(l1, 1) + getValue(l2, 1));
+    // }
+
+    // private static int getValue(ListNode l, int multiplier) {
+    // if (l.next == null)
+    // return l.val * multiplier;
+    // else
+    // return (l.val * multiplier) + getValue(l.next, multiplier * 10);
+    // }
+
+    // private static ListNode getIntToListNode(int i) {
+    // if (i / 10 == 0)
+    // return new ListNode(i);
+    // else
+    // return new ListNode((i % 10), getIntToListNode(i / 10));
+    // }
 }
